@@ -340,7 +340,7 @@ if __name__ == '__main__':
     if (len(sys.argv) != 4):
         print(f"Usage: {sys.argv[0]} <toformat> base_file ndd_file")
         print(" <toformat> = ndd  (NDD disk image format)")
-        print("            = mame (MAME/Ares physical disk image format)")
+        print("            = mame (MAME/ares physical disk image format)")
         print("            = d64  (D64 master disk image format, lossy process)")
     else:
         if sys.argv[1] != "ndd" and sys.argv[1] != "mame" and sys.argv[1] != "d64":
