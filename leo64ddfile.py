@@ -232,6 +232,9 @@ class Disk_D64:
             # update raw sys data
             self.sys_data.update(defect=False, d64=True)
 
+            # remove disk unique information
+            self.disk_id.remove_disk_unique_info()
+
             # calculate D64 file size
             size = 0x200
             size += leo64dd.lba_to_byte(self.sys_data.disk_type, leo64dd.sys_lba_count, self.sys_data.rom_end_lba + 1)
@@ -338,7 +341,7 @@ def load_disk_file(d: bytearray):
 
 if __name__ == '__main__':
     if (len(sys.argv) != 4):
-        print(f"Usage: {sys.argv[0]} <toformat> base_file ndd_file")
+        print(f"Usage: {sys.argv[0]} <toformat> base_file out_file")
         print(" <toformat> = ndd  (NDD disk image format)")
         print("            = mame (MAME/ares physical disk image format)")
         print("            = d64  (D64 master disk image format, lossy process)")

@@ -162,16 +162,47 @@ class Disk_Sys:
 class Disk_Id:
     def __init__(self, d: bytearray):
         self.raw = d[:232]
+        self.reload()
+    
+    def reload(self):
+        """
+        Reload Disk ID based from current RAW data.
+        """
+        self.initial_code = self.raw[:4].decode("ASCII")
+        self.game_version = self.raw[4]
+        self.disk_number = self.raw[5]
+        self.ram_use = self.raw[6]
+        self.disk_use = self.raw[7]
+        self.factory_line = self.raw[8:][:8]
+        self.production_time = self.raw[0x10:][:8]
+        self.company_code = self.raw[0x18:][:2].decode("ASCII")
+        self.free_area = self.raw[0x1A:][:6]
+    
+    def update(self):
+        """
+        Update RAW data based from variables.
+        """
+        raw = bytearray(232)
 
-        self.initial_code = d[:4].decode("ASCII")
-        self.game_version = d[4]
-        self.disk_number = d[5]
-        self.ram_use = d[6]
-        self.disk_use = d[7]
-        self.factory_line = d[8:][:8]
-        self.production_time = d[0x10:][:8]
-        self.company_code = d[0x18:][:2].decode("ASCII")
-        self.free_area = d[0x1A:][:6]
+        raw[:4] = self.initial_code.encode("ASCII")[:4]
+        raw[4] = self.game_version
+        raw[5] = self.disk_number
+        raw[6] = self.ram_use
+        raw[7] = self.disk_use
+        raw[8:] = self.factory_line[:8]
+        raw[0x10:] = self.production_time[:8]
+        raw[0x18:] = self.company_code.encode("ASCII")[:2]
+        raw[0x1A:] = self.free_area[:6]
+
+        self.raw = raw
+
+    def remove_disk_unique_info(self):
+        """
+        Remove Factory Line and Production Time info.
+        """
+        self.factory_line = bytearray(b'\x00') * 8
+        self.production_time = bytearray(b'\x00') * 8
+        self.update()
 
 
 class PhysInfo:

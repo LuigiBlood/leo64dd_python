@@ -18,6 +18,7 @@ This class is for an easier access of the System Data information of the disk, a
 - `Disk_Sys.ram_end_lba`: End of written RAM Area block (base LBA = 24), `0xFFFF` if not used. (Used in D64 format and Retail Disk dumps.)
 - `Disk_Sys.defect_tracks[][]`: List of defective physical cylinders/tracks. Only relevant for MAME file format management.
 
+
 - `Disk_Sys(bytearray)`: Initialize class with bytearray of System Data.
 - `Disk_Sys.reload()`: Reloads variables from RAW bytearray initially given.
 - `Disk_Sys.update(defect, d64)`: Modify RAW bytearray using the variables.
@@ -43,6 +44,12 @@ This class is for an easier access of the Disk ID block.
 - `Disk_Id.production_time`: BCD Timestamp of production `00YYYYMMDDHHMMSS` (8 bytes)
 - `Disk_Id.company_code`: ASCII Company Code. `01` = Nintendo. (2 bytes)
 - `Disk_Id.free_area`: Can be used as developers sees fit. (6 bytes)
+
+
+- `Disk_Id(bytearray)`: Initialize class with bytearray of Disk ID.
+- `Disk_Id.reload()`: Reloads variables from RAW bytearray initially given.
+- `Disk_Id.update()`: Modify RAW bytearray using the variables.
+- `Disk_Id.remove_disk_unique_info()`: Remove Factory Line and Production Time info.
 
 ### PhysInfo
 
@@ -72,7 +79,7 @@ This is the stuff you should use.
 # leo64ddfile.py
 
 ## Usage as an application
-    Usage: leo64ddfile.py <toformat> base_file ndd_file
+    Usage: leo64ddfile.py <toformat> base_file out_file
      <toformat> = ndd  (NDD disk image format)
                 = mame (MAME/ares physical disk image format)
                 = d64  (D64 master disk image format, lossy process
