@@ -74,7 +74,7 @@ This is the stuff you should use.
 ## Usage as an application
     Usage: leo64ddfile.py <toformat> base_file ndd_file
      <toformat> = ndd  (NDD disk image format)
-                = mame (MAME/Ares physical disk image format)
+                = mame (MAME/ares physical disk image format)
                 = d64  (D64 master disk image format, lossy process
 
 ## Classes
@@ -94,6 +94,7 @@ Each of the classes have the following:
 - `class.sys_data`: Contains Disk_Sys class based from provided disk file.
 - `class.disk_id`: Contains Disk_Id class based from provided disk file.
 - `class.raw`: Contains raw file data.
+- `class.development`: `False` if disk file is Retail format, `True` if disk file is Development format.
 
 The following is for initializing the class.
 - `class.load(bytearray)`: Provide bytearray of file, checks validity and then initializes everything.
@@ -106,7 +107,7 @@ The following is for finding blocks.
 - `class.get_lba(lba, makesys=False)`: Provide LBA and it will return a bytearray of the entire block.
   - `makesys` is only for `Disk_D64` class, and is not required, and adds information to the System Data to look more like a Retail disk. (default=`False`)
 
-## Functions
+## High Level Functions
 The following is for a general transparent use of the disk files:
 - `basic_disk_file_check(bytearray)`: Provide bytearray of the full disk file and returns the format. Either `ndd`, `mame` or `d64`.
-- `load_disk_file(bytearray)`: Provide bytearray of the full disk file and appropriately loads and returns the correct disk class.
+- `load_disk_file(bytearray)`: Provide bytearray of the full disk file and returns fully loaded disk class.
